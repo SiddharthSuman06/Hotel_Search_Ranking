@@ -4,7 +4,7 @@ When someone searches for a hotel, which hotels should go at the top so that the
 
 This project uses real hotel searches from Expedia to build a ranking model, and then looks at the results the way a hotelier would. I spent over a decade in hospitality before moving into data, so the question I care about isn't only "does the model score well?". It's also "is it pushing cheap rooms that people click on but don't book?"
 
-**Status: work in progress.** Part 1 is underway.
+**Status:** Part 1 is done. Part 2 is next.
 
 ## The data
 
@@ -22,6 +22,17 @@ About 30% of the searches were shown in **random order**. That makes this datase
 | 4 | `04_hotelier_view.ipynb` | Which features drive bookings, and whether the model ranks hotels too highly when they get clicks but not bookings |
 
 Scoring follows the original competition: a booking counts 5 points, a click 1 point, nothing 0, measured with NDCG.
+
+## Part 1 findings
+
+![Click and booking rate by position](01_position_bias.png)
+
+* **Position alone triples clicks.** In searches shown in random order, hotels in the top 5 got 3.2 times the clicks of hotels at positions 11 to 25. Expedia's own ranking adds a smaller extra lift on top of that (1.3 times).
+* **Top clicks aren't "cheap".** I expected clicks at the top to turn into bookings less often. It's the other way round: 13% of top 5 clicks led to a booking, against about 9% further down. Position mostly decides which hotels people look at in the first place.
+* **Watch how the data was sampled.** 94% of normal searches in the data end in a booking, against 13% of random ones. That gap says more about how searches were picked for the dataset than about the value of ranking, so I don't use it as a result.
+* **Price needs cleaning.** Most prices are normal nightly rates, but the maximum is over $9.6 million, and some countries show price per stay instead of per night. I compare prices within each search instead.
+
+![Share of clicks that became a booking](01_booking_after_click.png)
 
 ## How to run it
 
