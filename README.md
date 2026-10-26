@@ -25,10 +25,10 @@ Scoring follows the original competition: a booking counts 5 points, a click 1 p
 
 ## How to run it
 
-1. Create a free Kaggle account, open the [competition page](https://www.kaggle.com/c/expedia-personalized-sort), and accept the rules so you can download the data.
-2. In Kaggle, go to **Settings → API** and create an API token. Note your username and key.
-3. Open the notebook in Google Colab. Add two secrets (key icon in the left sidebar): `KAGGLE_USERNAME` and `KAGGLE_KEY`.
-4. Run all cells. The first run downloads the data and saves a 25% sample of searches to your Google Drive. Later runs load the sample in seconds.
+1. Download the training data from the [competition page](https://www.kaggle.com/c/expedia-personalized-sort) on Kaggle (you need a free account and have to accept the competition rules).
+2. Upload it to your Google Drive. The zip or the unzipped `train.csv` both work.
+3. Open the notebook in Google Colab and paste your file's ID into `DRIVE_FILE_ID`. The ID is the long code in the file's share link, between `/d/` and `/view`.
+4. Run all cells. The first run copies the file into Colab and saves a 25% sample of searches back to your Drive. Later runs load that sample in seconds.
 
 ## Author
 
