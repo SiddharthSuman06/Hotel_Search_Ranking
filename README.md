@@ -4,7 +4,7 @@ When someone searches for a hotel, which hotels should go at the top so that the
 
 This project uses real hotel searches from Expedia to build a ranking model, and then looks at the results the way a hotelier would. I spent over a decade in hospitality before moving into data, so the question I care about isn't only "does the model score well?". It's also "is it pushing cheap rooms that people click on but don't book?"
 
-**Status:** Parts 1 and 2 are done. Part 3, the model, is next.
+**Status:** Parts 1 to 3 are done. Part 4, the hotelier's view, is next.
 
 ## The data
 
@@ -44,6 +44,17 @@ Scoring follows the original competition: a booking counts 5 points, a click 1 p
 * **Cheap rooms don't attract empty clicks.** Cheaper hotels get more clicks (5.8% against 3.8% for the priciest), but clicks become bookings at about the same rate, 12%. Only the priciest fifth converts a bit worse (10%).
 
 ![Price groups](02_price_groups.png)
+
+## Part 3 findings
+
+![Model against the simple rules](03_model_vs_baselines.png)
+
+* **The model beats the best simple rule by 35%.** On the fair test (random searches) it scores 0.316 NDCG@5, against 0.234 for best location first.
+* **It gets close to Expedia's own ranking without using position.** Where Expedia chose the order, the model reaches 0.377 against Expedia's 0.408, even though Expedia's score has a head start from position bias.
+* **More data beat cleaner data.** A model trained on all searches did better (0.316) than one trained only on the random searches (0.293), which ran out of examples to learn from.
+* **Location and "is this a deal" matter most.** The top features are location within the search, and today's price compared with the hotel's usual price. Price features in total carry about 28% of the model, a bit less than location, so it isn't just sorting by cheapest.
+
+![Feature importance](03_feature_importance.png)
 
 ## How to run it
 
