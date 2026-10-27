@@ -4,7 +4,14 @@ When someone searches for a hotel, which hotels should go at the top so that the
 
 This project uses real hotel searches from Expedia to build a ranking model, and then looks at the results the way a hotelier would. I spent over a decade in hospitality before moving into data, so the question I care about isn't only "does the model score well?". It's also "is it pushing cheap rooms that people click on but don't book?"
 
-**Status:** Parts 1 to 3 are done. Part 4, the hotelier's view, is next.
+**Status:** complete.
+
+## In short
+
+* **The model beats every simple sorting rule by 35%** on a fair test, and gets within about 8% of Expedia's own ranking without using page position.
+* **Position on the page triples clicks on its own**, so I measured it with Expedia's randomly ordered searches and kept it out of the model.
+* **Guests respond to a deal more than to a low price.** Today's price compared with the hotel's usual price is the strongest driver in the model.
+* **The weak spot:** the model still favours hotels that attract clicks over hotels that turn clicks into bookings. I explain how I'd fix it.
 
 ## The data
 
@@ -55,6 +62,20 @@ Scoring follows the original competition: a booking counts 5 points, a click 1 p
 * **Location and "is this a deal" matter most.** The top features are location within the search, and today's price compared with the hotel's usual price. Price features in total carry about 28% of the model, a bit less than location, so it isn't just sorting by cheapest.
 
 ![Feature importance](03_feature_importance.png)
+
+## Part 4 findings
+
+![How features push a hotel up or down](04_feature_effects.png)
+
+* **Price against the hotel's usual rate is the strongest push by far.** Half the usual price pushes a hotel up (by 0.41), one and a half times the usual price pushes it down hard (by 0.62). Charging more than usual costs more visibility than a discount of the same size wins back.
+* **Missing information hurts.** Hotels whose location score was missing end up pushed down, more than hotels with a poor location score.
+* **The model leans only slightly towards cheap rooms.** The cheapest fifth gets 29.6% of the model's top 5 against 25.5% of bookings, but the median price shown first ($121) is in line with what guests booked ($117). Expedia's own ranking leaned the other way, giving the priciest fifth twice its share of bookings.
+
+![Price fairness](04_price_fairness.png)
+
+* **Click magnets still get too much space.** Hotels that attract clicks but rarely convert reach the model's top 5 38% of the time, while hidden gems that convert twice as well reach it only 27% of the time. Adding a conversion feature and weighting bookings more would be the next step.
+
+![Click magnets](04_click_magnets.png)
 
 ## How to run it
 
